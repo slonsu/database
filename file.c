@@ -20,6 +20,7 @@ int QueryValidator (char arr[100], int type) {
     char *from = "FROM";
     //char update[12] = "UPDATE Customers SET ContactName = 'Alfred Schmidt', City= 'Frankfurt';
     char *delete = "DELETE";
+    char *drop = "DROP";
     char insert[83] = "INSERT INTO table_name (column1, column2, column3) VALUES (value1, value2, value3)";
     char create[52] = "CREATE TABLE table_name (column1, column2, column3)";
 
@@ -98,7 +99,21 @@ int QueryValidator (char arr[100], int type) {
             break;
         
         case 4:
+            ; //не удалять
 
+            for (int i = 0; ptr != NULL; i++) {
+                if (i == 0 && strcmp(drop, ptr) != 0){
+                    //printf("hereerror2");
+                    return 0;//ошибка
+                }
+                if (i == 1){
+                    memcpy (tablename, ptr, 20);
+                    //printf("hereerrorss4");
+                }  
+
+                //printf("'%s'\n", ptr);
+                ptr = strtok(NULL, delim);
+            }
             break;
         
         case 5:
