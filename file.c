@@ -21,12 +21,14 @@ int QueryValidator (char arr[100], int type) {
     //char update[12] = "UPDATE Customers SET ContactName = 'Alfred Schmidt', City= 'Frankfurt';
     char *delete = "DELETE";
     char *drop = "DROP";
-    char insert[83] = "INSERT INTO table_name (column1, column2, column3) VALUES (value1, value2, value3)";
-    char create[52] = "CREATE TABLE table_name (column1, column2, column3)";
+    char *create = "CREATE";
+    char *column = "COLUMNS";
+    char *insert = "INSERT";
+    char *value = "VALUES";
+    // char insert[83] = "INSERT INTO table_name (column1, column2, column3) VALUES (value1, value2, value3)";
+    // char create[52] = "CREATE TABLE table_name (column1, column2, column3)";
 
     char *where = "WHERE";
-    char *and = "AND";
-    char *or = "OR";
 
     char conditionpart1[100];
     char conditionpart2[100];
@@ -79,7 +81,7 @@ int QueryValidator (char arr[100], int type) {
                 ptr = strtok(NULL, delim);
 
                 if (i >= 3 && i <= 5 && ptr == NULL){
-                    printf("Where condition is incorrect");
+                    printf("Where condition is incorrect\n");
                     return 0;
                 }
             }
@@ -91,11 +93,62 @@ int QueryValidator (char arr[100], int type) {
             break;
         
         case 2:
-            /* code */
+
+            for (int i = 0; ptr != NULL; i++) {
+                if (i == 0 && strcmp(insert, ptr) != 0){
+                    //printf("hereerror2");
+                    return 0;//ошибка
+                }
+                if (i == 1){
+                    memcpy (tablename, ptr, 20);
+                    //printf("hereerrorss4");
+                }
+                if (i == 2 && strcmp(value, ptr) != 0){
+                    //printf("hereerrorss3");
+                    return 0;//ошибка
+                }
+                if (i > 2) {
+                    // printf("saving columns\n");
+                    break;
+                }
+
+                //printf("'%s'\n", ptr);
+                ptr = strtok(NULL, delim);
+
+                if (i < 3 && ptr == NULL){
+                    printf("You must insert at least one column\n");
+                    return 0;
+                }
+            }
             break;
         
         case 3:
-            /* code */
+            for (int i = 0; ptr != NULL; i++) {
+                if (i == 0 && strcmp(create, ptr) != 0){
+                    //printf("hereerror2");
+                    return 0;//ошибка
+                }
+                if (i == 1){
+                    memcpy (tablename, ptr, 20);
+                    //printf("hereerrorss4");
+                }
+                if (i == 2 && strcmp(column, ptr) != 0){
+                    //printf("hereerrorss3");
+                    return 0;//ошибка
+                }
+                if (i > 2) {
+                    // printf("saving columns\n");
+                    break;
+                }
+
+                //printf("'%s'\n", ptr);
+                ptr = strtok(NULL, delim);
+
+                if (i < 3 && ptr == NULL){
+                    printf("You must create at least one column\n");
+                    return 0;
+                }
+            }
             break;
         
         case 4:
@@ -153,7 +206,7 @@ int QueryValidator (char arr[100], int type) {
                 ptr = strtok(NULL, delim);
 
                 if (i >= 3 && i <= 5 && ptr == NULL){
-                    printf("Where condition is incorrect");
+                    printf("Where condition is incorrect\n");
                     return 0;
                 }
             }
